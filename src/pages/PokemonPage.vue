@@ -14,6 +14,7 @@
 import PokemonPicture from '@/components/PokemonPicture.vue';
 import PokemonOptions from '@/components/PokemonOptions.vue';
 import getPokemon from '@/helpers/getPokemosOptions';
+import swal from 'sweetalert';
 
 export default {
 	components: {
@@ -37,9 +38,21 @@ export default {
 			this.pokemon = this.pokemonArr[randomIndex];
 		},
 		checkAnswer(pokemonId) {
-			if (pokemonId === this.pokemon.id) {
-				this.showPokemon = true;
+			const esCorrecto = pokemonId === this.pokemon.id;
+			if (!esCorrecto) {
+				swal('Opcion incorrecta', 'error', 'error');
+				return;
 			}
+			this.showPokemon = true;
+			swal('Opcion correcta', 'felicidades', 'success');
+			setTimeout(() => {
+				this.newGame();
+			}, 2000);
+		},
+		newGame() {
+			this.showPokemon = false;
+			this.pokemonArr = [];
+			this.mixedPokemonArr();
 		}
 	},
 	mounted() {
