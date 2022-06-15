@@ -44,8 +44,12 @@ export default {
 		checkAnswer(pokemonId) {
 			const esCorrecto = pokemonId === this.pokemon.id;
 			if (!esCorrecto) {
+				swal(
+					'Opcion incorrecta',
+					`Tu puntaje es de ${this.contador}`,
+					'error'
+				);
 				this.contador = 0;
-				swal('Opcion incorrecta', 'error', 'error');
 				return;
 			}
 			this.showPokemon = true;
