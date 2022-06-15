@@ -7,25 +7,29 @@
 			:showPokemon="showPokemon"
 		/>
 		<PokemonOptions :pokemons="pokemonArr" @selection="checkAnswer" />
+		<PokemonContador :contador="contador" />
 	</div>
 </template>
 
 <script>
 import PokemonPicture from '@/components/PokemonPicture.vue';
 import PokemonOptions from '@/components/PokemonOptions.vue';
+import PokemonContador from '@/components/PokemonContador.vue';
 import getPokemon from '@/helpers/getPokemosOptions';
 import swal from 'sweetalert';
 
 export default {
 	components: {
 		PokemonPicture,
-		PokemonOptions
+		PokemonOptions,
+		PokemonContador
 	},
 	data() {
 		return {
 			pokemonArr: [],
 			pokemon: null,
-			showPokemon: false
+			showPokemon: false,
+			contador: 0
 		};
 	},
 	methods: {
@@ -40,10 +44,12 @@ export default {
 		checkAnswer(pokemonId) {
 			const esCorrecto = pokemonId === this.pokemon.id;
 			if (!esCorrecto) {
+				this.contador = 0;
 				swal('Opcion incorrecta', 'error', 'error');
 				return;
 			}
 			this.showPokemon = true;
+			this.contador++;
 			swal('Opcion correcta', 'felicidades', 'success');
 			setTimeout(() => {
 				this.newGame();
